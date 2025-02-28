@@ -2,16 +2,16 @@ package com.matrix.SHOPPE.controller;
 
 import com.matrix.SHOPPE.model.User;
 import com.matrix.SHOPPE.service.UserService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController("/users")
+@RestController
+@RequestMapping("/users")
+@RequiredArgsConstructor
 public class UserController {
     private UserService userService;
-    public UserController(UserService userService) {
-        this.userService = userService;
-    }
 
     @GetMapping
     public List<User> getUsers() {
