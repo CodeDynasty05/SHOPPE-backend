@@ -1,5 +1,6 @@
-package com.matrix.SHOPPE.model;
+package com.matrix.SHOPPE.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.ToString;
@@ -26,6 +27,7 @@ public class Product {
     @JoinColumn(name = "category_id",referencedColumnName = "id")
     private Category category;
     @OneToOne(mappedBy = "product")
+    @JsonBackReference
     private ProductInfo productInfo;
     @ManyToMany(mappedBy = "products")
     private List<Colour> colours;

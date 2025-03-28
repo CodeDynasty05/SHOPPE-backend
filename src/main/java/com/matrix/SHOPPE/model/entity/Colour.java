@@ -1,4 +1,4 @@
-package com.matrix.SHOPPE.model;
+package com.matrix.SHOPPE.model.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
@@ -6,20 +6,20 @@ import lombok.ToString;
 
 import java.util.List;
 
-@Entity
 @Data
+@Entity
 @ToString
-@Table(name="materials")
-public class Material {
+@Table(name="colours")
+public class Colour {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private String materialName;
+    private String colourName;
     @ManyToMany
     @JoinTable(
-            name = "product_materials",
+            name = "product_colours",
             joinColumns = @JoinColumn(name = "product_id"),
-            inverseJoinColumns = @JoinColumn(name = "material_id")
+            inverseJoinColumns = @JoinColumn(name = "colour_id")
     )
     List<Product> products;
 }

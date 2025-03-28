@@ -1,4 +1,4 @@
-package com.matrix.SHOPPE.model;
+package com.matrix.SHOPPE.model.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
