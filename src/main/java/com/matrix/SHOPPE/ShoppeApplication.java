@@ -2,7 +2,7 @@ package com.matrix.SHOPPE;
 
 import com.matrix.SHOPPE.Repository.CategoryRepository;
 import com.matrix.SHOPPE.Repository.UserRepository;
-import com.matrix.SHOPPE.model.User;
+import com.matrix.SHOPPE.model.entity.User;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
@@ -24,8 +24,5 @@ public class ShoppeApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) {
-		for (User user : userRepository.findAll()) {
-			log.info("Category: {}", user);
-		}
 	}
 }

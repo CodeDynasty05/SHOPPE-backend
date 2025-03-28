@@ -1,6 +1,6 @@
 package com.matrix.SHOPPE.Repository;
 
-import com.matrix.SHOPPE.model.Category;
+import com.matrix.SHOPPE.model.entity.Category;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
