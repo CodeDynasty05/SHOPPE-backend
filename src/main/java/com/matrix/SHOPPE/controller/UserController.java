@@ -1,6 +1,7 @@
 package com.matrix.SHOPPE.controller;
 
-import com.matrix.SHOPPE.model.User;
+import com.matrix.SHOPPE.model.DTO.UserAddRequestDTO;
+import com.matrix.SHOPPE.model.DTO.UserDTO;
 import com.matrix.SHOPPE.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -11,15 +12,15 @@ import java.util.List;
 @RequestMapping("/users")
 @RequiredArgsConstructor
 public class UserController {
-    private UserService userService;
+    private final    UserService userService;
 
     @GetMapping
-    public List<User> getUsers() {
+    public List<UserDTO> getUsers() {
         return userService.getUsers();
     }
 
     @GetMapping("/{id}")
-    public User getUser(@PathVariable Integer id) {
+    public UserDTO getUser(@PathVariable Integer id) {
         return userService.getUserById(id);
     }
 
@@ -29,12 +30,12 @@ public class UserController {
     }
 
     @PutMapping
-    public void updateUser(@RequestBody User user) {
-        userService.updateUser(user);
+    public UserDTO updateUser(@RequestBody UserAddRequestDTO user) {
+        return userService.updateUser(user);
     }
 
     @PostMapping
-    public void addUser(@RequestBody User user) {
-        userService.addUser(user);
+    public UserDTO addUser(@RequestBody UserAddRequestDTO user) {
+        return userService.addUser(user);
     }
 }

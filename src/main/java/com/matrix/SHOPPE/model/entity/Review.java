@@ -1,4 +1,4 @@
-package com.matrix.SHOPPE.model;
+package com.matrix.SHOPPE.model.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
@@ -15,6 +15,9 @@ public class Review {
     private String comment;
     private String reviewDate;
     private Double startRating;
+    @ManyToOne
+    @JoinColumn(name = "replied_to",referencedColumnName = "id")
+    private User repliedTo;
     @ManyToOne
     @JoinColumn(name = "product_id",referencedColumnName = "id")
     private Product product;
