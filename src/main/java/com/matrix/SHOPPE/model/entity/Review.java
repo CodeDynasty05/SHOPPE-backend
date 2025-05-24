@@ -14,10 +14,7 @@ public class Review {
     private Integer id;
     private String comment;
     private String reviewDate;
-    private Double startRating;
-    @ManyToOne
-    @JoinColumn(name = "replied_to",referencedColumnName = "id")
-    private User repliedTo;
+    private Double starRating;
     @ManyToOne
     @JoinColumn(name = "product_id",referencedColumnName = "id")
     private Product product;

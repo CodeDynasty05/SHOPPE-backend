@@ -1,9 +1,11 @@
 package com.matrix.SHOPPE.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.ToString;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -12,14 +14,12 @@ import java.util.List;
 @Table(name="colours")
 public class Colour {
     @Id
+    @JsonIgnore
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String colourName;
-    @ManyToMany
-    @JoinTable(
-            name = "product_colours",
-            joinColumns = @JoinColumn(name = "product_id"),
-            inverseJoinColumns = @JoinColumn(name = "colour_id")
-    )
-    List<Product> products;
+    @ManyToMany(mappedBy = "colours")
+    @JsonIgnore
+    @ToString.Exclude
+    private List<Product> products = new ArrayList<>();
 }

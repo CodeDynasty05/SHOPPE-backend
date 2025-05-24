@@ -2,7 +2,7 @@ package com.matrix.SHOPPE.service.impl;
 
 import com.matrix.SHOPPE.Repository.CategoryRepository;
 import com.matrix.SHOPPE.mapper.CategoryMapper;
-import com.matrix.SHOPPE.model.DTO.CategoryDTO;
+import com.matrix.SHOPPE.model.dto.CategoryDto;
 import com.matrix.SHOPPE.model.entity.Category;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -31,7 +31,7 @@ class CategoryServiceImplTest {
     private CategoryServiceImpl categoryService;
 
     private Category category;
-    private CategoryDTO categoryDTO;
+    private CategoryDto categoryDTO;
 
     @BeforeEach
     void setUp() {
@@ -39,7 +39,7 @@ class CategoryServiceImplTest {
         category.setId(1);
         category.setCategoryName("Electronics");
 
-        categoryDTO = new CategoryDTO();
+        categoryDTO = new CategoryDto();
         categoryDTO.setId(1);
         categoryDTO.setCategoryName("Electronics");
     }
@@ -49,7 +49,7 @@ class CategoryServiceImplTest {
         when(categoryRepository.findAll()).thenReturn(Arrays.asList(category));
         when(categoryMapper.toCategoryDTO(category)).thenReturn(categoryDTO);
 
-        List<CategoryDTO> categories = categoryService.getCategories();
+        List<CategoryDto> categories = categoryService.getCategories();
 
         assertEquals(1, categories.size());
         assertEquals("Electronics", categories.get(0).getCategoryName());

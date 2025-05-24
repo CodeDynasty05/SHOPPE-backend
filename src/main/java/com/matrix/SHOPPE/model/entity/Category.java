@@ -1,5 +1,6 @@
 package com.matrix.SHOPPE.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.ToString;
@@ -16,6 +17,7 @@ public class Category {
     private Integer id;
     private String categoryName;
     @ToString.Exclude
+    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY,mappedBy = "category")
     private List<Product> products;
 }

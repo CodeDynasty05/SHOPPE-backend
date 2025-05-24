@@ -2,17 +2,22 @@ package com.matrix.SHOPPE;
 
 import com.matrix.SHOPPE.Repository.CategoryRepository;
 import com.matrix.SHOPPE.Repository.UserRepository;
-import com.matrix.SHOPPE.model.entity.User;
+import com.matrix.SHOPPE.jwt.JwtService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.data.web.config.EnableSpringDataWebSupport;
+
+import static org.springframework.data.web.config.EnableSpringDataWebSupport.PageSerializationMode.VIA_DTO;
 
 @SpringBootApplication
 @Slf4j
 @RequiredArgsConstructor
+@EnableSpringDataWebSupport(pageSerializationMode = VIA_DTO)
 public class ShoppeApplication implements CommandLineRunner {
+	private final JwtService jwtService;
 
 	private final CategoryRepository categoryRepository;
 	private final UserRepository userRepository;
@@ -24,5 +29,9 @@ public class ShoppeApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) {
+
+//		User user=userRepository.findByUsername("nazim").get();
+//		String token = jwtService.issueToken(user);
+//		log.info(token);
 	}
 }
