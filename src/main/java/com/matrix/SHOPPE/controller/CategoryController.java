@@ -1,6 +1,6 @@
 package com.matrix.SHOPPE.controller;
 
-import com.matrix.SHOPPE.model.DTO.CategoryDTO;
+import com.matrix.SHOPPE.model.dto.CategoryDto;
 import com.matrix.SHOPPE.service.CategoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -14,7 +14,7 @@ public class CategoryController {
     private final CategoryService categoryService;
 
     @GetMapping
-    public List<CategoryDTO> getCategories() {
+    public List<CategoryDto> getCategories() {
         return categoryService.getCategories();
     }
 
@@ -24,12 +24,12 @@ public class CategoryController {
     }
 
     @PutMapping
-    public CategoryDTO updateCategory(@RequestBody CategoryDTO category) {
+    public CategoryDto updateCategory(@RequestBody CategoryDto category) {
         return categoryService.updateCategory(category);
     }
 
     @PostMapping
-    public CategoryDTO addCategory(@RequestBody CategoryDTO category) {
+    public CategoryDto addCategory(@RequestBody CategoryDto category) {
         return categoryService.addCategory(category);
     }
 }

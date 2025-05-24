@@ -7,7 +7,7 @@ import lombok.ToString;
 @Data
 @Entity
 @ToString
-@Table(name="adresses")
+@Table(name="addresses")
 public class Address {
     @Id
     private Integer id;

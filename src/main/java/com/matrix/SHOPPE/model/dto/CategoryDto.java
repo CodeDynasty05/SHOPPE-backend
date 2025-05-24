@@ -1,9 +1,9 @@
-package com.matrix.SHOPPE.model.DTO;
+package com.matrix.SHOPPE.model.dto;
 
 import lombok.Data;
 
 @Data
-public class CategoryDTO {
+public class CategoryDto {
     private Integer id;
     private String categoryName;
 }

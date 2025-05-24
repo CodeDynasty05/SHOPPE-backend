@@ -1,8 +1,8 @@
 package com.matrix.SHOPPE.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.matrix.SHOPPE.model.DTO.UserAddRequestDTO;
-import com.matrix.SHOPPE.model.DTO.UserDTO;
+import com.matrix.SHOPPE.model.dto.UserAddRequestDto;
+import com.matrix.SHOPPE.model.dto.UserDto;
 import com.matrix.SHOPPE.service.UserService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -14,7 +14,6 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -33,21 +32,21 @@ class UserControllerTest {
     @MockBean
     private UserService userService;
 
-    private UserDTO userDTO;
-    private UserAddRequestDTO userAddRequestDTO;
+    private UserDto userDTO;
+    private UserAddRequestDto userAddRequestDTO;
 
     @BeforeEach
     void setUp() {
-        userDTO = new UserDTO();
+        userDTO = new UserDto();
         userDTO.setId(25);
-        userDTO.setName("test");
+        userDTO.setUsername("test");
         userDTO.setPhone("123456789");
         userDTO.setEmail("test@test.com");
 
-        userAddRequestDTO = new UserAddRequestDTO();
+        userAddRequestDTO = new UserAddRequestDto();
         userAddRequestDTO.setEmail("test2@test.com");
         userAddRequestDTO.setPhone("235253");
-        userAddRequestDTO.setName("test2");
+        userAddRequestDTO.setUsername("test2");
         userAddRequestDTO.setPassword("hardToFind");
     }
 
@@ -77,7 +76,7 @@ class UserControllerTest {
 
     @Test
     void addUser() throws Exception {
-        when(userService.addUser(any(UserAddRequestDTO.class))).thenReturn(userDTO);
+        when(userService.createUser(any(UserAddRequestDto.class))).thenReturn(userDTO);
 
         ObjectMapper objectMapper = new ObjectMapper();
 
@@ -92,6 +91,6 @@ class UserControllerTest {
                 .andExpect(jsonPath("$.email").value("test@test.com"))
                 .andDo(print());
 
-        verify(userService,times(1)).addUser(any(UserAddRequestDTO.class));
+        verify(userService,times(1)).createUser(any(UserAddRequestDto.class));
     }
 }

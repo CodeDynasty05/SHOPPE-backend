@@ -1,10 +1,10 @@
-package com.matrix.SHOPPE.model.DTO;
+package com.matrix.SHOPPE.model.dto;
 
 import lombok.Data;
 
 @Data
-public class UserAddRequestDTO {
-    private String name;
+public class UserAddRequestDto {
+    private String username;
     private String email;
     private String password;
     private String phone;
