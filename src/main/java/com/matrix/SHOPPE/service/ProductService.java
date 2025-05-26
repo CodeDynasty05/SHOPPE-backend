@@ -9,8 +9,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
-import java.util.List;
-
 @Service
 public interface ProductService {
 
@@ -18,9 +16,19 @@ public interface ProductService {
 
     ProductDto createProduct(@RequestBody ProductAddRequestDto productAddRequestDto);
 
-    ProductDto updateProduct(@RequestBody ProductAddRequestDto productAddRequestDto,Integer id);
+    ProductDto updateProduct(@RequestBody ProductAddRequestDto productAddRequestDto, Integer id);
 
     void delete(@PathVariable Integer id);
 
     ProductDto getProductById(@PathVariable Integer id);
+
+    Page<ProductBriefDto> searchProducts(
+            Double minPrice,
+            Double maxPrice,
+            Double minRating,
+            String namePattern,
+            Integer categoryId,
+            Boolean inStock,
+            Pageable pageable
+    );
 }

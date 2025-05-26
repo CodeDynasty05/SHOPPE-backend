@@ -21,16 +21,6 @@ import org.springframework.security.web.access.AccessDeniedHandler;
 @RequiredArgsConstructor
 public class WebSecurityConfig {
 
-    private final JwtAuthFilterConfigurerAdapter jwtAuthFilterConfigurerAdapter;
-
-    @Autowired
-    @Qualifier("delegatedAuthenticationEntryPoint")
-    private AuthenticationEntryPoint authEntryPoint;
-
-    @Autowired
-    @Qualifier("delegatedAccessDeniedHandler")
-    private AccessDeniedHandler accessDeniedHandler;
-
     private static final String[] PUBLIC_ENDPOINTS = {
             "/users/login/**",
             "/users/login",
@@ -38,13 +28,19 @@ public class WebSecurityConfig {
             "/users",
             "/swagger-ui/**",
             "/v3/api-docs/**",
-            "/blogs",
-            "/blogs/*"
+            "/users/reset-password",
+            "/users/forgot-password"
     };
-
     private static final String[] ADMIN_ENDPOINTS = {
             "/categories"
     };
+    private final JwtAuthFilterConfigurerAdapter jwtAuthFilterConfigurerAdapter;
+    @Autowired
+    @Qualifier("delegatedAuthenticationEntryPoint")
+    private AuthenticationEntryPoint authEntryPoint;
+    @Autowired
+    @Qualifier("delegatedAccessDeniedHandler")
+    private AccessDeniedHandler accessDeniedHandler;
 
     @Bean
     public static BCryptPasswordEncoder passwordEncoder() {
