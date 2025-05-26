@@ -35,8 +35,8 @@ public class SwaggerSecurityConfig {
                         addList("Bearer Authentication"))
                 .components(new Components().addSecuritySchemes
                         ("Bearer Authentication", createAPIKeyScheme()))
-                .info(new Info().title("Avocadiet API")
-                        .description("API for managing healthy food orders and merchants.")
+                .info(new Info().title("SHOPPE API")
+                        .description("API for managing accessories.")
                         .version("1.0"));
     }
 }

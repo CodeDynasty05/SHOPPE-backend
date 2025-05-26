@@ -10,5 +10,9 @@ import java.util.List;
 public interface ReviewService {
     List<ReviewDto> getReviews(Integer productId);
 
-    ReviewDto addReview(ReviewAddRequestDto review);
+    ReviewDto addReview(ReviewAddRequestDto review, String token);
+
+    ReviewDto editReview(Integer id, ReviewAddRequestDto review, String token);
+
+    void removeReview(Integer id, String token);
 }

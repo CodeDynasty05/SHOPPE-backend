@@ -1,14 +1,13 @@
 package com.matrix.SHOPPE.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import org.apache.commons.lang3.builder.EqualsExclude;
 import org.hibernate.annotations.CreationTimestamp;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDateTime;
-import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -32,14 +31,22 @@ public class User implements UserDetails {
     @CreationTimestamp
     private LocalDateTime createdAt;
 
+    @JsonIgnore
+    private Integer validationCode;
+
+    @JsonIgnore
+    @Column(name = "validation_code_timestamp")
+    private LocalDateTime validationCodeTimestamp;
+
+
     @ToString.Exclude
     @EqualsExclude
-    @OneToMany(mappedBy = "user",fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Set<Authority> authorities = new HashSet<>();
 
     @ToString.Exclude
     @EqualsExclude
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER,mappedBy = "user")
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "user")
     private List<Address> addresses;
 
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})

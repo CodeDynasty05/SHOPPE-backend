@@ -1,9 +1,6 @@
 package com.matrix.SHOPPE.controller;
 
-import com.matrix.SHOPPE.model.dto.RegisterRequestDto;
-import com.matrix.SHOPPE.model.dto.RegisterResponseDto;
-import com.matrix.SHOPPE.model.dto.UserAddRequestDto;
-import com.matrix.SHOPPE.model.dto.UserDto;
+import com.matrix.SHOPPE.model.dto.*;
 import com.matrix.SHOPPE.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -33,9 +30,9 @@ public class UserController {
         userService.deleteUser(id);
     }
 
-    @PutMapping("/{id}")
-    public UserDto updateUser(@RequestBody UserAddRequestDto user, @PathVariable Integer id) {
-        return userService.updateUser(user,id);
+    @PutMapping("/change-credentials")
+    public UserDto changeCredentials(@RequestBody UserAddRequestDto user, @RequestHeader(name = "Authorization") String token) {
+        return userService.updateUser(user, token);
     }
 
     @PostMapping("/register")
@@ -49,7 +46,17 @@ public class UserController {
     }
 
     @PutMapping("/update-role")
-    public void updateRole(@RequestParam Integer userId,@RequestParam String role,@RequestParam Integer senderId){
-        userService.updateRole(userId,role,senderId);
+    public void updateRole(@RequestParam Integer userId, @RequestParam String role, @RequestHeader(name = "Authorization") String token) {
+        userService.updateRole(userId, role, token);
+    }
+
+    @PutMapping("/forgot-password")
+    public UserDto forgotPassword(@RequestParam String usernameOrEmail) {
+        return userService.forgotPassword(usernameOrEmail);
+    }
+
+    @PostMapping("/reset-password")
+    public UserDto resetPassword(@RequestBody ResetPasswordDto resetPasswordDto) {
+        return userService.resetPassword(resetPasswordDto);
     }
 }

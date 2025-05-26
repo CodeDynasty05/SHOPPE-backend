@@ -9,14 +9,13 @@ import com.matrix.SHOPPE.model.dto.BlogDto;
 import com.matrix.SHOPPE.model.entity.Blog;
 import com.matrix.SHOPPE.service.BlogService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 @Service
+@Slf4j
 @RequiredArgsConstructor
 public class BlogServiceImpl implements BlogService {
 
@@ -25,31 +24,36 @@ public class BlogServiceImpl implements BlogService {
 
     @Override
     public Page<BlogBriefDto> getBlogs(Pageable pageable) {
+        log.info("Fetching blogs page: {}", pageable.getPageNumber());
         return blogRepository.findAll(pageable).map(blogMapper::productToBlogBriefDto);
     }
 
     @Override
     public BlogDto createBlog(BlogAddRequestDto blogAddRequestDto) {
+        log.info("Creating new blog post: {}", blogAddRequestDto.getTitle());
         return blogMapper.blogToBlogDto(blogRepository.save(blogMapper.blogAddRequestToBlog(blogAddRequestDto)));
     }
 
     @Override
-    public BlogDto updateBlog(BlogAddRequestDto blogAddRequestDto,Integer id) {
-        Blog blog = blogRepository.findById(id).orElseThrow(()-> new BlogNotFoundException("Blog with id "+id+" not found"));
-        Blog newBlog = blogMapper.updateBlog(blogAddRequestDto,blog);
+    public BlogDto updateBlog(BlogAddRequestDto blogAddRequestDto, Integer id) {
+        log.info("Updating blog with ID: {}", id);
+        Blog blog = blogRepository.findById(id).orElseThrow(() -> new BlogNotFoundException("Blog with id " + id + " not found"));
+        Blog newBlog = blogMapper.updateBlog(blogAddRequestDto, blog);
         return blogMapper.blogToBlogDto(blogRepository.save(newBlog));
     }
 
     @Override
     public void delete(Integer id) {
+        log.info("Deleting blog with ID: {}", id);
         if (!blogRepository.existsById(id)) {
-            throw new BlogNotFoundException("Blog with id "+id+" not found");
+            throw new BlogNotFoundException("Blog with id " + id + " not found");
         }
         blogRepository.deleteById(id);
     }
 
     @Override
     public BlogDto getBlogById(Integer id) {
-        return blogMapper.blogToBlogDto(blogRepository.findById(id).orElseThrow(() -> new BlogNotFoundException("Blog with id "+id+" not found")));
+        log.info("Fetching blog with ID: {}", id);
+        return blogMapper.blogToBlogDto(blogRepository.findById(id).orElseThrow(() -> new BlogNotFoundException("Blog with id " + id + " not found")));
     }
 }
