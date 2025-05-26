@@ -16,7 +16,7 @@ public class BasketController {
     private final BasketService basketService;
 
     @GetMapping("/{userId}")
-    public List<BasketDto> getBasket(Integer userId) {
+    public List<BasketDto> getBasket(@PathVariable Integer userId) {
         return basketService.getBasketById(userId);
     }
 
@@ -26,8 +26,8 @@ public class BasketController {
     }
 
     @PutMapping("/{id}")
-    public BasketDto updateQuantity(@PathVariable Integer id,@RequestParam Integer quantity) {
-        return basketService.updateQuantity(id,quantity);
+    public BasketDto updateQuantity(@PathVariable Integer id, @RequestParam Integer quantity) {
+        return basketService.updateQuantity(id, quantity);
     }
 
     @DeleteMapping("/{id}")
