@@ -11,6 +11,7 @@ import java.util.List;
 public class OrderDto {
     private Integer id;
     private Double totalAmount;
+    private Integer transactionId;
     private OrderStatus status;
     private Instant createdAt;
     private Instant updatedAt;

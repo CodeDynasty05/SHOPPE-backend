@@ -14,17 +14,22 @@ public class OrderController {
     private final OrderService orderService;
 
     @GetMapping
-    public List<OrderDto> getOrders(@RequestHeader(name = "Authorization") String token) {
+    public List<OrderDto> getOrders(@RequestHeader(name = "Authorization", required = false) String token) {
         return orderService.getOrders(token);
     }
 
     @GetMapping("/{id}")
-    public OrderDto getOrder(@PathVariable Integer id, @RequestHeader(name = "Authorization") String token) {
+    public OrderDto getOrder(@PathVariable Integer id, @RequestHeader(name = "Authorization", required = false) String token) {
         return orderService.getOrderById(id, token);
     }
 
-    @PostMapping("buy")
-    public OrderDto buyProduct(@RequestHeader(name = "Authorization") String token) {
-        return orderService.createOrder(token);
+    @PostMapping("/buy/{accountNumber}")
+    public OrderDto buyProduct(@RequestHeader(name = "Authorization", required = false) String token, @PathVariable String accountNumber, @RequestParam String password) {
+        return orderService.createOrder(token, accountNumber, password);
+    }
+
+    @PutMapping("/pay/{id}")
+    public OrderDto payOrder(@PathVariable Integer id, @RequestHeader(name = "Authorization", required = false) String token) {
+        return orderService.payOrder(id, token);
     }
 }

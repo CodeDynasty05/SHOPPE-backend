@@ -2,21 +2,21 @@
 
 1) Blog dto variation - DONE!
 2) Dynamic rating system - DONE!
+4) Maybe Transaction system connection (MS) - DONE!
 5) Wish list - DONE!
 8) updateRole for admin - DONE!
 9) Apply clean code logic especially for WebConfig - DONE!
+10) Validation - DONE!
 11) Product and blog pagination - DONE!
 12) Logging (either on file or standard output) - DONE!
 13) Forget password - DONE!
 14) Scheduler for status change - DONE!
 16) Comment finish - DONE!
 17) Filter products - DONE!
------------------------------------------------------------------
-4) Maybe Transaction system connection (MS) ???
-10) Validation
 18) Check correctness of all FetchTypes and CascadeTypes
-    and ensure that endpoint access levels are logical in SecurityConfig
-Final Boss) Unit Testing that covers 100% of 2 services.
+    and ensure that endpoint access levels are logical in SecurityConfig - DONE!
+Final Boss) Unit Testing that covers 100% of 2 services - DONE!
+-----------------------------------------------------------------
 --------------------------------------------------------------
 3) Getting email notification on a product update - DON'T HAVE TIME!
 3) SOLVED --------- Input Errors. How to catch?? - No Need after Validation

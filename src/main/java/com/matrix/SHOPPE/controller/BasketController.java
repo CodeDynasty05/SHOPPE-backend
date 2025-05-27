@@ -4,6 +4,7 @@ package com.matrix.SHOPPE.controller;
 import com.matrix.SHOPPE.model.dto.BasketAddRequestDto;
 import com.matrix.SHOPPE.model.dto.BasketDto;
 import com.matrix.SHOPPE.service.BasketService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,7 +22,7 @@ public class BasketController {
     }
 
     @PostMapping
-    public BasketDto addBasket(@RequestBody BasketAddRequestDto basketAddRequestDto) {
+    public BasketDto addBasket(@Valid @RequestBody BasketAddRequestDto basketAddRequestDto) {
         return basketService.addBasket(basketAddRequestDto);
     }
 

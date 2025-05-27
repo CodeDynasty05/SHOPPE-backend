@@ -41,12 +41,12 @@ public class User implements UserDetails {
 
     @ToString.Exclude
     @EqualsExclude
-    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Authority> authorities = new HashSet<>();
 
     @ToString.Exclude
     @EqualsExclude
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "user")
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "user")
     private List<Address> addresses;
 
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})

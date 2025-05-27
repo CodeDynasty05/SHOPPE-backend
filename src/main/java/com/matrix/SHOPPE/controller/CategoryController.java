@@ -2,6 +2,7 @@ package com.matrix.SHOPPE.controller;
 
 import com.matrix.SHOPPE.model.dto.CategoryDto;
 import com.matrix.SHOPPE.service.CategoryService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,12 +25,12 @@ public class CategoryController {
     }
 
     @PutMapping
-    public CategoryDto updateCategory(@RequestBody CategoryDto category) {
+    public CategoryDto updateCategory(@Valid @RequestBody CategoryDto category) {
         return categoryService.updateCategory(category);
     }
 
     @PostMapping
-    public CategoryDto addCategory(@RequestBody CategoryDto category) {
+    public CategoryDto addCategory(@Valid @RequestBody CategoryDto category) {
         return categoryService.addCategory(category);
     }
 }

@@ -3,6 +3,7 @@ package com.matrix.SHOPPE.controller;
 import com.matrix.SHOPPE.model.dto.ReviewAddRequestDto;
 import com.matrix.SHOPPE.model.dto.ReviewDto;
 import com.matrix.SHOPPE.service.ReviewService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
@@ -25,7 +26,7 @@ public class ReviewController {
     }
 
     @PostMapping
-    public ReviewDto addReview(@RequestBody ReviewAddRequestDto review, @RequestHeader(name = "Authorization") String token) {
+    public ReviewDto addReview(@Valid @RequestBody ReviewAddRequestDto review, @RequestHeader(name = "Authorization") String token) {
         log.info("Adding new review for product ID: {}", review.getProductId());
         ReviewDto savedReview = reviewService.addReview(review, token);
         log.debug("Successfully added review with ID: {}", savedReview.getId());
@@ -33,7 +34,7 @@ public class ReviewController {
     }
 
     @PutMapping("/{id}")
-    public ReviewDto editReview(@PathVariable Integer id, @RequestBody ReviewAddRequestDto review, @RequestHeader(name = "Authorization") String token) {
+    public ReviewDto editReview(@Valid @PathVariable Integer id, @RequestBody ReviewAddRequestDto review, @RequestHeader(name = "Authorization") String token) {
         return reviewService.editReview(id, review, token);
     }
 

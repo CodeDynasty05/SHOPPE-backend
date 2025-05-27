@@ -8,6 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.data.web.config.EnableSpringDataWebSupport;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
@@ -17,6 +18,7 @@ import static org.springframework.data.web.config.EnableSpringDataWebSupport.Pag
 @Slf4j
 @RequiredArgsConstructor
 @EnableScheduling
+@EnableFeignClients(basePackages = "com.matrix.SHOPPE.client")
 @EnableSpringDataWebSupport(pageSerializationMode = VIA_DTO)
 public class ShoppeApplication implements CommandLineRunner {
     private final JwtService jwtService;

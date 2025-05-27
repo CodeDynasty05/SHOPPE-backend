@@ -5,6 +5,7 @@ import com.matrix.SHOPPE.model.dto.ProductAddRequestDto;
 import com.matrix.SHOPPE.model.dto.ProductBriefDto;
 import com.matrix.SHOPPE.model.dto.ProductDto;
 import com.matrix.SHOPPE.service.ProductService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -41,12 +42,12 @@ public class ProductsController {
 
 
     @PostMapping
-    public ProductDto create(@RequestBody ProductAddRequestDto productAddRequestDto) {
+    public ProductDto create(@Valid @RequestBody ProductAddRequestDto productAddRequestDto) {
         return productService.createProduct(productAddRequestDto);
     }
 
     @PutMapping("/{id}")
-    public ProductDto update(@RequestBody ProductAddRequestDto productAddRequestDto, @PathVariable Integer id) {
+    public ProductDto update(@Valid @RequestBody ProductAddRequestDto productAddRequestDto, @PathVariable Integer id) {
         return productService.updateProduct(productAddRequestDto, id);
     }
 

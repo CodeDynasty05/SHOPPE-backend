@@ -30,6 +30,9 @@ public class Order {
     @NotNull
     private Double totalAmount;
 
+    @NotNull
+    private Integer transactionId;
+
     @ColumnDefault("'PENDING'")
     @Enumerated(EnumType.STRING)
     @Column(name = "status")

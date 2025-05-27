@@ -2,6 +2,7 @@ package com.matrix.SHOPPE.controller;
 
 import com.matrix.SHOPPE.model.dto.*;
 import com.matrix.SHOPPE.service.UserService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
@@ -31,12 +32,12 @@ public class UserController {
     }
 
     @PutMapping("/change-credentials")
-    public UserDto changeCredentials(@RequestBody UserAddRequestDto user, @RequestHeader(name = "Authorization") String token) {
+    public UserDto changeCredentials(@Valid @RequestBody UserAddRequestDto user, @RequestHeader(name = "Authorization") String token) {
         return userService.updateUser(user, token);
     }
 
     @PostMapping("/register")
-    public UserDto register(@RequestBody UserAddRequestDto user) {
+    public UserDto register(@Valid @RequestBody UserAddRequestDto user) {
         return userService.createUser(user);
     }
 

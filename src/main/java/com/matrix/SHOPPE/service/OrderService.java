@@ -11,5 +11,7 @@ public interface OrderService {
 
     OrderDto getOrderById(Integer id, String token);
 
-    OrderDto createOrder(String token);
+    OrderDto createOrder(String token, String accountNumber, String password);
+
+    OrderDto payOrder(Integer id, String token);
 }

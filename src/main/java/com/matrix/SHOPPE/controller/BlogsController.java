@@ -4,12 +4,11 @@ import com.matrix.SHOPPE.model.dto.BlogAddRequestDto;
 import com.matrix.SHOPPE.model.dto.BlogBriefDto;
 import com.matrix.SHOPPE.model.dto.BlogDto;
 import com.matrix.SHOPPE.service.BlogService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -29,13 +28,13 @@ public class BlogsController {
     }
 
     @PostMapping
-    public BlogDto create(@RequestBody BlogAddRequestDto blogAddRequestDto) {
+    public BlogDto create(@Valid @RequestBody BlogAddRequestDto blogAddRequestDto) {
         return blogService.createBlog(blogAddRequestDto);
     }
 
     @PutMapping("/{id}")
-    public BlogDto update(@RequestBody BlogAddRequestDto blogAddRequestDto,@PathVariable Integer id) {
-        return blogService.updateBlog(blogAddRequestDto,id);
+    public BlogDto update(@Valid @RequestBody BlogAddRequestDto blogAddRequestDto, @PathVariable Integer id) {
+        return blogService.updateBlog(blogAddRequestDto, id);
     }
 
     @DeleteMapping("/{id}")

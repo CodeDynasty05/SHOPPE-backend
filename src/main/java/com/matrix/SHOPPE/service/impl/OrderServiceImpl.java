@@ -8,12 +8,14 @@ import com.matrix.SHOPPE.jwt.JwtService;
 import com.matrix.SHOPPE.mapper.OrderMapper;
 import com.matrix.SHOPPE.model.dto.BasketDto;
 import com.matrix.SHOPPE.model.dto.OrderDto;
+import com.matrix.SHOPPE.model.dto.TransactionDto;
 import com.matrix.SHOPPE.model.entity.Order;
 import com.matrix.SHOPPE.model.entity.OrderItem;
 import com.matrix.SHOPPE.model.entity.OrderStatus;
 import com.matrix.SHOPPE.model.entity.User;
 import com.matrix.SHOPPE.service.BasketService;
 import com.matrix.SHOPPE.service.OrderService;
+import com.matrix.SHOPPE.service.PaymentService;
 import io.jsonwebtoken.Claims;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -32,6 +34,7 @@ public class OrderServiceImpl implements OrderService {
     private final UserRepository userRepository;
     private final OrderMapper orderMapper;
     private final BasketService basketService;
+    private final PaymentService paymentService;
 
     @Override
     public List<OrderDto> getOrders(String token) {
@@ -50,7 +53,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public OrderDto createOrder(String token) {
+    public OrderDto createOrder(String token, String accountNumber, String password) {
         User user = getUserFromToken(token);
         List<BasketDto> basket = basketService.getBasketById(user.getId());
 
@@ -78,16 +81,26 @@ public class OrderServiceImpl implements OrderService {
                     * basketItem.getQuantity() * (1 - basketItem.getProduct().getDiscount() / 100);
             totalAmount += itemTotal;
         }
+        TransactionDto transactionDto = paymentService.createPayment(totalAmount, accountNumber, user.getUsername(), password);
 
         order.setOrderItems(orderItems);
         order.setTotalAmount(totalAmount);
-
+        order.setTransactionId((int) (long) transactionDto.getId());
         Order savedOrder = orderRepository.save(order);
 
         basket.forEach(basketDto -> basketService.delete(basketDto.getId()));
 
+
         log.info("Created order for user: {}, with total amount: {}", user.getUsername(), totalAmount);
         return orderMapper.orderToOrderDto(savedOrder);
+    }
+
+    @Override
+    public OrderDto payOrder(Integer id, String token) {
+        Order order = orderRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Order not found"));
+        paymentService.confirmPayment(order.getTransactionId());
+        order.setStatus(OrderStatus.PAID);
+        return orderMapper.orderToOrderDto(orderRepository.save(order));
     }
 
 
