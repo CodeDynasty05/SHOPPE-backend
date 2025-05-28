@@ -20,6 +20,7 @@ public class PaymentServiceImpl implements PaymentService {
 
     @Override
     public TransactionDto createPayment(Double totalAmount, String accountNumber, String username, String password) {
+        log.info("Creating payment request");
         TransactionAddRequestDto transaction = TransactionAddRequestDto
                 .builder()
                 .amount(totalAmount)
@@ -28,11 +29,13 @@ public class PaymentServiceImpl implements PaymentService {
                 .transactionType(TransactionType.PURCHASE)
                 .password(password)
                 .build();
+        log.info("Create payment response");
         return paymentClient.createPayment(transaction);
     }
 
     @Override
     public TransactionDto confirmPayment(Integer transactionId) {
+        log.info("Confirming payment request");
         try {
             return paymentClient.confirmPayment(transactionId, TransactionStatus.SUCCESS);
         } catch (Exception e) {

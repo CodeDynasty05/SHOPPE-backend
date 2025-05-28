@@ -55,11 +55,13 @@ public class ReviewServiceImpl implements ReviewService {
 
         Review savedReview = reviewRepository.save(review);
         saveRating(reviewAddRequestDto.getProductId());
+        log.info("Saved review for product ID: {}", reviewAddRequestDto.getProductId());
         return reviewMapper.reviewToReviewDto(savedReview);
     }
 
     @Override
     public ReviewDto editReview(Integer id, ReviewAddRequestDto review, String token) {
+        log.info("Updating review for product ID: {}", id);
         Review reviewEntity = reviewRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Review with id " + id + " not found"));
         Claims claims = jwtService.validateToken(token.substring("bearer".length()).trim());
         String username = claims.get("sub", String.class);
@@ -71,11 +73,13 @@ public class ReviewServiceImpl implements ReviewService {
 
         Review savedReview = reviewRepository.save(reviewEntity);
         saveRating(reviewEntity.getProduct().getId());
+        log.info("Saved review for product ID: {}", reviewEntity.getProduct().getId());
         return reviewMapper.reviewToReviewDto(savedReview);
     }
 
     @Override
     public void removeReview(Integer id, String token) {
+        log.info("Removing review for product ID: {}", id);
         Review reviewEntity = reviewRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Review with id " + id + " not found"));
         Claims claims = jwtService.validateToken(token.substring("bearer".length()).trim());
         String username = claims.get("sub", String.class);
@@ -83,14 +87,17 @@ public class ReviewServiceImpl implements ReviewService {
             throw new ForbiddenException("Only the user who created the review can update it");
         }
         reviewRepository.deleteById(id);
+        log.info("Removed review for product ID: {}", id);
         saveRating(reviewEntity.getProduct().getId());
     }
 
     private void saveRating(Integer productId) {
+        log.info("Saving review for product ID: {}", productId);
         Product product = productRepository.findById(productId).orElseThrow(() -> new ProductNotFoundException("Product with id " + productId + " not found"));
         List<Review> reviews = reviewRepository.findByProductId(productId);
         Double averageRating = reviews.stream().mapToDouble(Review::getStarRating).average().orElse(0.0);
         product.setRating(averageRating);
         productRepository.save(product);
+        log.info("Saved review for product ID: {}", productId);
     }
 }

@@ -54,6 +54,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public OrderDto createOrder(String token, String accountNumber, String password) {
+        log.info("Creating order with accountNumber: {}", accountNumber);
         User user = getUserFromToken(token);
         List<BasketDto> basket = basketService.getBasketById(user.getId());
 
@@ -97,9 +98,11 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public OrderDto payOrder(Integer id, String token) {
+        log.info("Paying order with ID: {}", id);
         Order order = orderRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Order not found"));
         paymentService.confirmPayment(order.getTransactionId());
         order.setStatus(OrderStatus.PAID);
+        log.info("Payed order with ID: {}", id);
         return orderMapper.orderToOrderDto(orderRepository.save(order));
     }
 

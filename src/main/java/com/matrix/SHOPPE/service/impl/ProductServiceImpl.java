@@ -105,17 +105,22 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public ProductDto updateProduct(ProductAddRequestDto productAddRequestDto, Integer id) {
+        log.info("Updating product: {}", productAddRequestDto.getProductName());
         Product product = productRepository.findById(id).orElseThrow(() -> new ProductNotFoundException("Product with id " + id + " not found"));
         Product newProduct = productMapper.updateProduct(productAddRequestDto, product);
-        return productMapper.productToProductDto(productRepository.save(newProduct));
+        Product savedProduct = productRepository.save(newProduct);
+        log.info("Successfully updated product with ID: {}", newProduct.getId());
+        return productMapper.productToProductDto(savedProduct);
     }
 
     @Override
     public void delete(Integer id) {
+        log.info("Deleting product: {}", id);
         if (!productRepository.existsById(id)) {
             throw new ProductNotFoundException("Product with id " + id + " not found");
         }
         productRepository.deleteById(id);
+        log.info("Successfully deleted product with ID: {}", id);
     }
 
     @Override

@@ -31,7 +31,9 @@ public class BlogServiceImpl implements BlogService {
     @Override
     public BlogDto createBlog(BlogAddRequestDto blogAddRequestDto) {
         log.info("Creating new blog post: {}", blogAddRequestDto.getTitle());
-        return blogMapper.blogToBlogDto(blogRepository.save(blogMapper.blogAddRequestToBlog(blogAddRequestDto)));
+        Blog blog = blogRepository.save(blogMapper.blogAddRequestToBlog(blogAddRequestDto));
+        log.info("Created new blog post: {}", blogAddRequestDto.getTitle());
+        return blogMapper.blogToBlogDto(blog);
     }
 
     @Override
@@ -39,6 +41,7 @@ public class BlogServiceImpl implements BlogService {
         log.info("Updating blog with ID: {}", id);
         Blog blog = blogRepository.findById(id).orElseThrow(() -> new BlogNotFoundException("Blog with id " + id + " not found"));
         Blog newBlog = blogMapper.updateBlog(blogAddRequestDto, blog);
+        log.info("Updated blog with ID: {}", newBlog.getId());
         return blogMapper.blogToBlogDto(blogRepository.save(newBlog));
     }
 
@@ -49,6 +52,7 @@ public class BlogServiceImpl implements BlogService {
             throw new BlogNotFoundException("Blog with id " + id + " not found");
         }
         blogRepository.deleteById(id);
+        log.info("Deleted blog with ID: {}", id);
     }
 
     @Override

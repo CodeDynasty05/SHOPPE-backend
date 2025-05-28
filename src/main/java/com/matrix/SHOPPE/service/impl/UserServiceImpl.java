@@ -66,7 +66,9 @@ public class UserServiceImpl implements UserService {
         authority.setAuthority("USER");
         userEntity.getAuthorities().add(authority);
         authority.setUser(userEntity);
-        return userMapper.toUserDTO(userRepository.save(userEntity));
+        User savedUser = userRepository.save(userEntity);
+        log.info("Saving user: {}", savedUser);
+        return userMapper.toUserDTO(savedUser);
     }
 
     @Override
@@ -82,6 +84,7 @@ public class UserServiceImpl implements UserService {
         log.info("Deleting user with ID: {}", id);
         if (userRepository.existsById(id)) {
             userRepository.deleteById(id);
+            log.info("Deleted user with ID: {}", id);
         } else {
             throw new ResourceNotFoundException("This user doesn't exist");
         }

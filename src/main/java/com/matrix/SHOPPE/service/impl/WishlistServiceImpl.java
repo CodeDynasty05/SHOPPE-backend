@@ -10,11 +10,13 @@ import com.matrix.SHOPPE.model.entity.Product;
 import com.matrix.SHOPPE.model.entity.User;
 import com.matrix.SHOPPE.service.WishlistService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class WishlistServiceImpl implements WishlistService {
@@ -23,6 +25,7 @@ public class WishlistServiceImpl implements WishlistService {
     private final UserRepository userRepository;
 
     public void addToWishlist(Integer productId, Integer userId) {
+        log.info("Adding product to wishlist {}", productId);
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new UserNotFoundException("User not found with id: " + userId));
 
@@ -31,9 +34,11 @@ public class WishlistServiceImpl implements WishlistService {
 
         user.addToWishlist(product);
         userRepository.save(user);
+        log.info("Product added to wishlist {}", productId);
     }
 
     public void removeFromWishlist(Integer productId, Integer userId) {
+        log.info("Removing product from wishlist {}", productId);
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new UserNotFoundException("User not found with id: " + userId));
 
@@ -42,9 +47,11 @@ public class WishlistServiceImpl implements WishlistService {
 
         user.removeFromWishlist(product);
         userRepository.save(user);
+        log.info("Product removed from wishlist {}", productId);
     }
 
     public List<ProductDto> getWishlistProducts(Integer userId) {
+        log.info("Getting wishlist products");
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new UserNotFoundException("User not found with id: " + userId));
 

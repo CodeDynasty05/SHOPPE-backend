@@ -45,6 +45,7 @@ public class BasketServiceImpl implements BasketService {
         basket.setProduct(product);
         basket.setQuantity(basketAddRequestDto.getQuantity());
         basket.setUser(user);
+        log.info("Adding basket: {}", basket);
         return basketMapper.basketToBasketDto(basketRepository.save(basket));
     }
 
@@ -53,7 +54,9 @@ public class BasketServiceImpl implements BasketService {
         log.info("Updating quantity to {} for basket item ID: {}", quantity, id);
         Basket basket = basketRepository.findById(id).orElseThrow(() -> new BasketNotFoundException("Basket with id " + id + " not found"));
         basket.setQuantity(quantity);
-        return basketMapper.basketToBasketDto(basketRepository.save(basket));
+        Basket basketUpdated = basketRepository.save(basket);
+        log.info("Basket updated: {}", basketUpdated);
+        return basketMapper.basketToBasketDto(basketUpdated);
     }
 
     @Override
@@ -63,5 +66,6 @@ public class BasketServiceImpl implements BasketService {
             throw new BasketNotFoundException("Basket with id " + id + " not found");
         }
         basketRepository.deleteById(id);
+        log.info("Deleted basket item with ID: {}", id);
     }
 }
