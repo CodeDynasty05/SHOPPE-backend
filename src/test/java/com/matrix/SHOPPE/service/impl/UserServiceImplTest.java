@@ -1,12 +1,12 @@
 package com.matrix.SHOPPE.service.impl;
 
-import com.matrix.SHOPPE.Repository.UserRepository;
 import com.matrix.SHOPPE.exception.BadRequest;
 import com.matrix.SHOPPE.exception.UserNotFoundException;
 import com.matrix.SHOPPE.jwt.JwtService;
 import com.matrix.SHOPPE.mapper.UserMapper;
 import com.matrix.SHOPPE.model.dto.*;
 import com.matrix.SHOPPE.model.entity.User;
+import com.matrix.SHOPPE.repository.UserRepository;
 import jakarta.mail.internet.MimeMessage;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

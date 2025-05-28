@@ -1,13 +1,13 @@
 package com.matrix.SHOPPE.service.impl;
 
-import com.matrix.SHOPPE.Repository.ProductRepository;
-import com.matrix.SHOPPE.Repository.UserRepository;
 import com.matrix.SHOPPE.exception.ProductNotFoundException;
 import com.matrix.SHOPPE.exception.UserNotFoundException;
 import com.matrix.SHOPPE.mapper.ProductMapper;
 import com.matrix.SHOPPE.model.dto.ProductDto;
 import com.matrix.SHOPPE.model.entity.Product;
 import com.matrix.SHOPPE.model.entity.User;
+import com.matrix.SHOPPE.repository.ProductRepository;
+import com.matrix.SHOPPE.repository.UserRepository;
 import com.matrix.SHOPPE.service.WishlistService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

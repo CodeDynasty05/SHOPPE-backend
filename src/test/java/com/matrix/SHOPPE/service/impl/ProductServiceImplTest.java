@@ -1,9 +1,5 @@
 package com.matrix.SHOPPE.service.impl;
 
-import com.matrix.SHOPPE.Repository.CategoryRepository;
-import com.matrix.SHOPPE.Repository.ColourRepository;
-import com.matrix.SHOPPE.Repository.MaterialRepository;
-import com.matrix.SHOPPE.Repository.ProductRepository;
 import com.matrix.SHOPPE.exception.ProductNotFoundException;
 import com.matrix.SHOPPE.mapper.ProductMapper;
 import com.matrix.SHOPPE.model.dto.ProductAddRequestDto;
@@ -11,6 +7,10 @@ import com.matrix.SHOPPE.model.dto.ProductBriefDto;
 import com.matrix.SHOPPE.model.dto.ProductDto;
 import com.matrix.SHOPPE.model.entity.Category;
 import com.matrix.SHOPPE.model.entity.Product;
+import com.matrix.SHOPPE.repository.CategoryRepository;
+import com.matrix.SHOPPE.repository.ColourRepository;
+import com.matrix.SHOPPE.repository.MaterialRepository;
+import com.matrix.SHOPPE.repository.ProductRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

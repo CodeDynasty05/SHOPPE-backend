@@ -1,7 +1,5 @@
 package com.matrix.SHOPPE.service.impl;
 
-import com.matrix.SHOPPE.Repository.OrderRepository;
-import com.matrix.SHOPPE.Repository.UserRepository;
 import com.matrix.SHOPPE.exception.ResourceNotFoundException;
 import com.matrix.SHOPPE.exception.UserNotFoundException;
 import com.matrix.SHOPPE.jwt.JwtService;
@@ -13,6 +11,8 @@ import com.matrix.SHOPPE.model.entity.Order;
 import com.matrix.SHOPPE.model.entity.OrderItem;
 import com.matrix.SHOPPE.model.entity.OrderStatus;
 import com.matrix.SHOPPE.model.entity.User;
+import com.matrix.SHOPPE.repository.OrderRepository;
+import com.matrix.SHOPPE.repository.UserRepository;
 import com.matrix.SHOPPE.service.BasketService;
 import com.matrix.SHOPPE.service.OrderService;
 import com.matrix.SHOPPE.service.PaymentService;
@@ -102,8 +102,9 @@ public class OrderServiceImpl implements OrderService {
         Order order = orderRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Order not found"));
         paymentService.confirmPayment(order.getTransactionId());
         order.setStatus(OrderStatus.PAID);
+        Order savedOrder = orderRepository.save(order);
         log.info("Payed order with ID: {}", id);
-        return orderMapper.orderToOrderDto(orderRepository.save(order));
+        return orderMapper.orderToOrderDto(savedOrder);
     }
 
 

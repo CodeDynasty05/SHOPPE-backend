@@ -1,6 +1,6 @@
 package com.matrix.SHOPPE.service.impl;
 
-import com.matrix.SHOPPE.Repository.UserRepository;
+import com.matrix.SHOPPE.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

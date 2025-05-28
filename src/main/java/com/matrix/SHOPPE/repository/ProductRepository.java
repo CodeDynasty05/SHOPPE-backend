@@ -1,4 +1,4 @@
-package com.matrix.SHOPPE.Repository;
+package com.matrix.SHOPPE.repository;
 
 import com.matrix.SHOPPE.model.entity.Product;
 import org.springframework.data.domain.Page;

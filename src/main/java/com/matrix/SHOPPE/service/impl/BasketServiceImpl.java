@@ -1,8 +1,5 @@
 package com.matrix.SHOPPE.service.impl;
 
-import com.matrix.SHOPPE.Repository.BasketRepository;
-import com.matrix.SHOPPE.Repository.ProductRepository;
-import com.matrix.SHOPPE.Repository.UserRepository;
 import com.matrix.SHOPPE.exception.BasketNotFoundException;
 import com.matrix.SHOPPE.exception.ProductNotFoundException;
 import com.matrix.SHOPPE.exception.UserNotFoundException;
@@ -12,19 +9,22 @@ import com.matrix.SHOPPE.model.dto.BasketDto;
 import com.matrix.SHOPPE.model.entity.Basket;
 import com.matrix.SHOPPE.model.entity.Product;
 import com.matrix.SHOPPE.model.entity.User;
+import com.matrix.SHOPPE.repository.BasketRepository;
+import com.matrix.SHOPPE.repository.ProductRepository;
+import com.matrix.SHOPPE.repository.UserRepository;
 import com.matrix.SHOPPE.service.BasketService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @Slf4j
 @RequiredArgsConstructor
+@Transactional
 public class BasketServiceImpl implements BasketService {
-
     private final BasketRepository basketRepository;
     private final UserRepository userRepository;
     private final ProductRepository productRepository;
@@ -32,39 +32,43 @@ public class BasketServiceImpl implements BasketService {
 
     @Override
     public List<BasketDto> getBasketById(Integer userId) {
-        log.info("Fetching basket items for user ID: {}", userId);
-        return basketRepository.findByUserId(userId).stream().map(basketMapper::basketToBasketDto).collect(Collectors.toList());
+        log.info("Fetching basket for user ID: {}", userId);
+        List<Basket> baskets = basketRepository.findByUserId(userId);
+        return baskets.stream().map(basketMapper::basketToBasketDto).toList();
     }
 
     @Override
     public BasketDto addBasket(BasketAddRequestDto basketAddRequestDto) {
-        log.info("Adding product ID: {} to basket for user ID: {}", basketAddRequestDto.getProductId(), basketAddRequestDto.getUserId());
-        Product product = productRepository.findById(basketAddRequestDto.getProductId()).orElseThrow(() -> new ProductNotFoundException("Product with id " + basketAddRequestDto.getProductId() + " not found"));
-        User user = userRepository.findById(basketAddRequestDto.getUserId()).orElseThrow(() -> new UserNotFoundException("User with id " + basketAddRequestDto.getUserId() + " not found"));
+        log.info("Adding item to basket for user ID: {}", basketAddRequestDto.getUserId());
+        Product product = productRepository.findById(basketAddRequestDto.getProductId())
+                .orElseThrow(() -> new ProductNotFoundException("Product not found"));
+        User user = userRepository.findById(basketAddRequestDto.getUserId())
+                .orElseThrow(() -> new UserNotFoundException("User not found"));
+
         Basket basket = new Basket();
         basket.setProduct(product);
         basket.setQuantity(basketAddRequestDto.getQuantity());
         basket.setUser(user);
-        log.info("Adding basket: {}", basket);
-        return basketMapper.basketToBasketDto(basketRepository.save(basket));
+
+        Basket savedBasket = basketRepository.save(basket);
+        log.info("Added item to basket with ID: {}", savedBasket.getId());
+        return basketMapper.basketToBasketDto(savedBasket);
     }
 
     @Override
     public BasketDto updateQuantity(Integer id, Integer quantity) {
-        log.info("Updating quantity to {} for basket item ID: {}", quantity, id);
-        Basket basket = basketRepository.findById(id).orElseThrow(() -> new BasketNotFoundException("Basket with id " + id + " not found"));
+        log.info("Updating basket item quantity, ID: {}, quantity: {}", id, quantity);
+        Basket basket = basketRepository.findById(id)
+                .orElseThrow(() -> new BasketNotFoundException("Basket not found"));
         basket.setQuantity(quantity);
-        Basket basketUpdated = basketRepository.save(basket);
-        log.info("Basket updated: {}", basketUpdated);
-        return basketMapper.basketToBasketDto(basketUpdated);
+        Basket updatedBasket = basketRepository.save(basket);
+        log.info("Updated basket item quantity, ID: {}", updatedBasket.getId());
+        return basketMapper.basketToBasketDto(updatedBasket);
     }
 
     @Override
     public void delete(Integer id) {
         log.info("Deleting basket item with ID: {}", id);
-        if (!basketRepository.existsById(id)) {
-            throw new BasketNotFoundException("Basket with id " + id + " not found");
-        }
         basketRepository.deleteById(id);
         log.info("Deleted basket item with ID: {}", id);
     }

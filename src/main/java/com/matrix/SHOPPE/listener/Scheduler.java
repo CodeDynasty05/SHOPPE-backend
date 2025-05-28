@@ -1,8 +1,8 @@
 package com.matrix.SHOPPE.listener;
 
-import com.matrix.SHOPPE.Repository.OrderRepository;
 import com.matrix.SHOPPE.model.entity.Order;
 import com.matrix.SHOPPE.model.entity.OrderStatus;
+import com.matrix.SHOPPE.repository.OrderRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Configuration;

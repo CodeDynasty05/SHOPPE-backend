@@ -1,6 +1,5 @@
 package com.matrix.SHOPPE.service.impl;
 
-import com.matrix.SHOPPE.Repository.UserRepository;
 import com.matrix.SHOPPE.exception.BadRequest;
 import com.matrix.SHOPPE.exception.ForbiddenException;
 import com.matrix.SHOPPE.exception.ResourceNotFoundException;
@@ -10,6 +9,7 @@ import com.matrix.SHOPPE.mapper.UserMapper;
 import com.matrix.SHOPPE.model.dto.*;
 import com.matrix.SHOPPE.model.entity.Authority;
 import com.matrix.SHOPPE.model.entity.User;
+import com.matrix.SHOPPE.repository.UserRepository;
 import com.matrix.SHOPPE.service.UserService;
 import io.jsonwebtoken.Claims;
 import jakarta.mail.internet.MimeMessage;
@@ -99,7 +99,7 @@ public class UserServiceImpl implements UserService {
             throw new BadRequest("Incorrect password");
         }
 
-        RegisterResponseDto registerResponseDto = new RegisterResponseDto();
+        RegisterResponseDto registerResponseDto = new RegisterResponseDto(user.getUsername(), user.getEmail());
         registerResponseDto.setJwtToken(jwtService.issueToken(user));
         return registerResponseDto;
     }
@@ -125,21 +125,25 @@ public class UserServiceImpl implements UserService {
 
         userEntity.getAuthorities().add(authority);
         userRepository.save(userEntity);
+        log.info("Updated role of user with ID: {} to {}", userId, role);
     }
 
     @Override
     public UserDto forgotPassword(String usernameOrEmail) {
+        log.info("Sending password reset validation code to: {}", usernameOrEmail);
         User user = userRepository.findByUsernameOrEmail(usernameOrEmail, usernameOrEmail)
                 .orElseThrow(() -> new UserNotFoundException("This user doesn't exist"));
         user.setValidationCode(generateValidationCode());
         user.setValidationCodeTimestamp(LocalDateTime.now());
         userRepository.save(user);
         sendEmailWithHtmlTemplate(user);
+        log.info("Sent validation code email to: {}", user.getEmail());
         return userMapper.toUserDTO(user);
     }
 
     @Override
     public UserDto resetPassword(ResetPasswordDto resetPasswordDto) {
+        log.info("Resetting password for user with username: {}", resetPasswordDto.getUsernameOrEmail());
         User user = userRepository.findByUsernameOrEmail(resetPasswordDto.getUsernameOrEmail(), resetPasswordDto.getUsernameOrEmail())
                 .orElseThrow(() -> new UserNotFoundException("This user doesn't exist"));
 
@@ -154,8 +158,9 @@ public class UserServiceImpl implements UserService {
         user.setPassword(encoder.encode(resetPasswordDto.getNewPassword()));
         user.setValidationCode(null);
         user.setValidationCodeTimestamp(null);
-
-        return userMapper.toUserDTO(userRepository.save(user));
+        User savedUser = userRepository.save(user);
+        log.info("Saved user: {}", savedUser);
+        return userMapper.toUserDTO(savedUser);
     }
 
 

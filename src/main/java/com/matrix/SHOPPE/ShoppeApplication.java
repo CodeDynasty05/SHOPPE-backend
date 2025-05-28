@@ -1,8 +1,8 @@
 package com.matrix.SHOPPE;
 
-import com.matrix.SHOPPE.Repository.CategoryRepository;
-import com.matrix.SHOPPE.Repository.UserRepository;
 import com.matrix.SHOPPE.jwt.JwtService;
+import com.matrix.SHOPPE.repository.CategoryRepository;
+import com.matrix.SHOPPE.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;

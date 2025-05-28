@@ -1,8 +1,5 @@
 package com.matrix.SHOPPE.service.impl;
 
-import com.matrix.SHOPPE.Repository.ProductRepository;
-import com.matrix.SHOPPE.Repository.ReviewRepository;
-import com.matrix.SHOPPE.Repository.UserRepository;
 import com.matrix.SHOPPE.exception.ForbiddenException;
 import com.matrix.SHOPPE.exception.ProductNotFoundException;
 import com.matrix.SHOPPE.exception.ResourceNotFoundException;
@@ -14,6 +11,9 @@ import com.matrix.SHOPPE.model.dto.ReviewDto;
 import com.matrix.SHOPPE.model.entity.Product;
 import com.matrix.SHOPPE.model.entity.Review;
 import com.matrix.SHOPPE.model.entity.User;
+import com.matrix.SHOPPE.repository.ProductRepository;
+import com.matrix.SHOPPE.repository.ReviewRepository;
+import com.matrix.SHOPPE.repository.UserRepository;
 import com.matrix.SHOPPE.service.ReviewService;
 import io.jsonwebtoken.Claims;
 import lombok.RequiredArgsConstructor;

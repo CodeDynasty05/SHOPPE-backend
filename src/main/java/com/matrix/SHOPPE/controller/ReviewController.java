@@ -27,9 +27,7 @@ public class ReviewController {
 
     @PostMapping
     public ReviewDto addReview(@Valid @RequestBody ReviewAddRequestDto review, @RequestHeader(name = "Authorization") String token) {
-        log.info("Adding new review for product ID: {}", review.getProductId());
         ReviewDto savedReview = reviewService.addReview(review, token);
-        log.debug("Successfully added review with ID: {}", savedReview.getId());
         return savedReview;
     }
 
@@ -41,6 +39,5 @@ public class ReviewController {
     @DeleteMapping("/{id}")
     public void removeReview(@PathVariable Integer id, @RequestHeader(name = "Authorization") String token) {
         reviewService.removeReview(id, token);
-        log.info("Successfully removed review with ID: {}", id);
     }
 }

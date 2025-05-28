@@ -32,7 +32,8 @@ public class WebSecurityConfig {
             "/users/forgot-password"
     };
     private static final String[] ADMIN_ENDPOINTS = {
-            "/categories"
+            "/categories",
+            "/users/",
     };
     private final JwtAuthFilterConfigurerAdapter jwtAuthFilterConfigurerAdapter;
     @Autowired

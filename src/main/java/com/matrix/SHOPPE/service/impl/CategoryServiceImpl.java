@@ -1,9 +1,9 @@
 package com.matrix.SHOPPE.service.impl;
 
-import com.matrix.SHOPPE.Repository.CategoryRepository;
 import com.matrix.SHOPPE.mapper.CategoryMapper;
 import com.matrix.SHOPPE.model.dto.CategoryDto;
 import com.matrix.SHOPPE.model.entity.Category;
+import com.matrix.SHOPPE.repository.CategoryRepository;
 import com.matrix.SHOPPE.service.CategoryService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
